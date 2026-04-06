@@ -1,0 +1,17 @@
+Provider: "bhargavi", Category: "AC Technician", Email: "bhargavi@gmail.com", Verified: true, Location: {"type":"Point","coordinates":[78.1561,9.923]}
+Provider: "lakshitha", Category: "Carpenter", Email: "lakshitha@gmail.com", Verified: true, Location: {"type":"Point","coordinates":[78.1561,9.923]}
+Provider: "trophi", Category: "Carpenter", Email: "trophi@gmail.com", Verified: true, Location: {"type":"Point","coordinates":[78.1561,9.923]}
+Provider: "karthika", Category: "Cleaner", Email: "karthika@gmail.com", Verified: true, Location: {"type":"Point","coordinates":[80.2917,13.0776]}
+Provider: "vinitha", Category: "carpenter", Email: "vinitha@gmail.com", Verified: true, Location: {"type":"Point","coordinates":[80.2917,13.0776]}
+Provider: "raja priya", Category: "chef", Email: "rajapriya@gmail.com", Verified: true, Location: {"type":"Point","coordinates":[80.2917,13.0776]}
+Provider: "preethi", Category: "Plumber", Email: "preethi@gmail.com", Verified: true, Location: {"type":"Point","coordinates":[80.2917,13.0776]}
+Provider: "harini", Category: "Electrical Services", Email: "harini@gmail.com", Verified: true, Location: {"type":"Point","coordinates":[80.2917,13.0776]}
+Provider: "chithra", Category: "Carpentry Services", Email: "chithra@gmail.com", Verified: true, Location: {"type":"Point","coordinates":[0,0]}
+Provider: "sri nivetha", Category: "Plumber", Email: "srinivetha@gmail.com", Verified: true, Location: {"type":"Point","coordinates":[78.5989,10.71]}
+Provider: "neela", Category: "ac mechanic", Email: "malarcomputer2020@gmail.com", Verified: true, Location: {"type":"Point","coordinates":[80.1697,13.013]}
+Provider: "vinisha", Category: "Electrician", Email: "nvbhargavi2@gmail.com", Verified: false, Location: {"type":"Point","coordinates":[80.2917,13.0776]}
+Provider: "karthika", Category: "Electrical Services", Email: "n.v.bhargavi6@gmail.com", Verified: false, Location: {"type":"Point","coordinates":[80.2917,13.0776]}
+Provider: "mani", Category: "Cleaner", Email: "kavimalar724@gmail.com", Verified: true, Location: {"type":"Point","coordinates":[78.1542,9.9539]}
+Provider: "Test Provider", Category: "Cleaning", Email: "test_provider@example.com", Verified: true, Location: {"type":"Point","coordinates":[77.5946,12.9716]}
+Provider: "sahul", Category: "carpenter", Email: "malarcomputer2026@gmail.com", Verified: true, Location: {"type":"Point","coordinates":[80.1697,13.013]}
+Provider: "perumal", Category: "ac mechanic", Email: "dailyfixlsd@gmail.com", Verified: true, Location: {"type":"Point","coordinates":[80.1601,13.064]}
