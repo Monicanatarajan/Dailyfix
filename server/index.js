@@ -115,5 +115,11 @@ mongoose.connect(MONGO_URI, {
     })
     .catch(err => {
         console.error('CRITICAL: MongoDB connection failed:', err.message);
-        process.exit(1); // Force Render to restart the service
+        if (err.message.includes('querySrv') || err.message.includes('ECONNREFUSED')) {
+            console.error('HINT: Your network is blocking Atlas SRV DNS lookups.');
+            console.error('FIX 1 → Change DNS to 8.8.8.8 (Google DNS) on your network adapter.');
+            console.error('FIX 2 → Use a standard (non-SRV) connection string from Atlas dashboard.');
+            console.error('FIX 3 → This works fine on Render — only your local network blocks it.');
+        }
+        process.exit(1);
     });
