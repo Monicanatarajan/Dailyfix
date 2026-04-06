@@ -4,6 +4,7 @@ import { Send, Phone, Video, MoreVertical, ArrowLeft, CheckCheck } from 'lucide-
 import { io } from 'socket.io-client';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL } from '../utils/config';
 
 const ChatWindow = ({ partner, bookingId, height = '400px', showHeader = true, onBack }) => {
     const { user } = useAuth();
@@ -14,7 +15,7 @@ const ChatWindow = ({ partner, bookingId, height = '400px', showHeader = true, o
 
     const getImageUrl = (imagePath) => {
         if (!imagePath) return 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
-        if (imagePath.startsWith('/uploads')) return `http://localhost:5001${imagePath}`;
+        if (imagePath.startsWith('/uploads')) return `${API_BASE_URL}${imagePath}`;
         return imagePath;
     };
 
@@ -22,7 +23,7 @@ const ChatWindow = ({ partner, bookingId, height = '400px', showHeader = true, o
     useEffect(() => {
         if (!user || (!partner && !bookingId)) return;
 
-        const newSocket = io('http://localhost:5001', { withCredentials: true });
+        const newSocket = io(API_BASE_URL, { withCredentials: true });
 
         newSocket.on('connect', () => {
             // ALWAYS join personal user room — needed to receive direct messages

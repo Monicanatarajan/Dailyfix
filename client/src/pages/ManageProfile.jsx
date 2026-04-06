@@ -3,6 +3,7 @@ import { Container, Card, Row, Col, Form, Button, Alert, Image } from 'react-boo
 import axios from 'axios';
 import { Camera, Save, MapPin, User as UserIcon } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL } from '../utils/config';
 
 const ManageProfile = () => {
     const { user, login } = useAuth(); // login is our way to update the global user Context
@@ -48,7 +49,7 @@ const ManageProfile = () => {
 
             // If it's a relative path from our backend, prefix it
             const imgUrl = userData.profileImage?.startsWith('/uploads') 
-                ? `http://localhost:5001${userData.profileImage}` 
+                ? `${API_BASE_URL}${userData.profileImage}` 
                 : userData.profileImage;
                 
             setPreviewImage(imgUrl || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');

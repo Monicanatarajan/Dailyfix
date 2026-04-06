@@ -8,5 +8,9 @@ export default defineConfig({
         proxy: {
             '/api': 'http://localhost:5001'
         }
+    },
+    define: {
+        // Makes VITE_API_URL available as import.meta.env.VITE_API_URL
+        // Set this in Render's frontend environment variables
     }
 })

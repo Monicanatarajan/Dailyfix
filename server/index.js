@@ -11,11 +11,16 @@ const Message = require('./models/Message');
 
 dotenv.config();
 
+const ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+    process.env.CLIENT_URL,
+].filter(Boolean);
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: 'http://localhost:5173',
+        origin: ALLOWED_ORIGINS,
         methods: ['GET', 'POST'],
         credentials: true
     }
@@ -24,7 +29,11 @@ const io = new Server(server, {
 // Middleware
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:5173', // Vite default port
+    origin: (origin, callback) => {
+        // Allow requests with no origin (mobile apps, curl, Render health checks)
+        if (!origin || ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+        callback(new Error(`CORS blocked: ${origin}`));
+    },
     credentials: true
 }));
 app.use(cookieParser());
@@ -33,11 +42,12 @@ app.use(cookieParser());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Database connection
-const PORT = process.env.PORT || 5000;
+const PORT      = process.env.PORT || 5001;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/dailyfix';
 
-// Disable operation buffering to fail immediately if connection is down
-mongoose.set('bufferCommands', false);
+// Log which DB we are connecting to (masks password for safety)
+const safeURI = MONGO_URI.replace(/:([^@]+)@/, ':<password>@');
+console.log(`[DB] Connecting to: ${safeURI}`);
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
@@ -95,7 +105,7 @@ io.on('connection', (socket) => {
 });
 
 mongoose.connect(MONGO_URI, {
-    serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of default 30s
+    serverSelectionTimeoutMS: 10000, // 10s — enough for Atlas cold start on Render
 })
     .then(() => {
         console.log('Successfully connected to MongoDB.');
@@ -104,10 +114,6 @@ mongoose.connect(MONGO_URI, {
         });
     })
     .catch(err => {
-        console.error('CRITICAL: MongoDB connection failed!');
-        console.error('Ensure MongoDB service is running (net start MongoDB as Administrator).');
-        if (err.message.includes('ECONNREFUSED')) {
-            console.error('DEBUG: Connection Refused! Is the MongoDB service running on port 27017?');
-        }
-        console.error('Error Details:', err.message);
+        console.error('CRITICAL: MongoDB connection failed:', err.message);
+        process.exit(1); // Force Render to restart the service
     });

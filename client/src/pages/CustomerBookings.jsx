@@ -99,7 +99,6 @@ const CustomerBookings = () => {
     };
 
     const handleSimulatedPayment = async () => {
-        // Validation based on method
         if (paymentMethod === 'UPI' || paymentMethod === 'GPay') {
             if (!paymentDetails.id) return alert('Please enter your UPI ID');
         } else if (paymentMethod === 'NetBanking') {
@@ -107,33 +106,25 @@ const CustomerBookings = () => {
         }
 
         setPaymentProcessing(true);
+        // Simulate network delay
+        await new Promise(resolve => setTimeout(resolve, 2000));
         try {
-            // Simulate network delay for real feel
-            setTimeout(async () => {
-                try {
-                    await axios.post(`/api/booking/payment-confirm/${activeBooking._id}`, {
-                        razorpay_signature: 'mock_signature', // Bypasses crypto in our backend
-                        razorpay_payment_id: `txn_sim_${Date.now()}`
-                    }, { withCredentials: true });
+            await axios.post(`/api/booking/payment-confirm/${activeBooking._id}`, {
+                razorpay_signature: 'mock_signature',
+                razorpay_payment_id: `txn_sim_${Date.now()}`
+            }, { withCredentials: true });
 
-                    setShowPayment(false);
-                    // Reset Payment State
-                    setPaymentStep(1); 
-                    setPaymentMethod(''); 
-                    setPaymentDetails({ id: '', bank: '' });
-                    
-                    alert(`🎉 Payment Successful via ${paymentMethod}! Please write a review for the provider.`);
-                    fetchBookings();
-                    // Auto-open review modal
-                    openReviewModal(activeBooking);
-                } catch (err) {
-                    alert('Simulated Payment Failed');
-                } finally {
-                    setPaymentProcessing(false);
-                }
-            }, 2000);
+            setShowPayment(false);
+            setPaymentStep(1);
+            setPaymentMethod('');
+            setPaymentDetails({ id: '', bank: '' });
+
+            alert(`🎉 Payment Successful via ${paymentMethod}! Please write a review for the provider.`);
+            fetchBookings();
+            openReviewModal(activeBooking);
         } catch (err) {
-            console.error('Checkout error:', err);
+            alert('Simulated Payment Failed');
+        } finally {
             setPaymentProcessing(false);
         }
     };

@@ -181,7 +181,6 @@ router.post('/payment-confirm/:id', protect, authorize('customer'), async (req, 
         if (!booking) return res.status(404).json({ message: 'Booking not found' });
 
         booking.paymentStatus = 'paid';
-        booking.status = 'completed'; // Now completed as soon as paid
         booking.transactionId = razorpay_payment_id || `txn_mock_${Date.now()}`;
         booking.commissionAmount = booking.amount * 0.10;
         await booking.save();

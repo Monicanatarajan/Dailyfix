@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Heart, Star, Trash2 } from 'lucide-react';
+import { API_BASE_URL } from '../utils/config';
 
 const Favorites = () => {
     const [favourites, setFavourites] = useState([]);
@@ -57,7 +58,7 @@ const Favorites = () => {
                                 <Card.Body className="p-4">
                                     <div className="d-flex align-items-start gap-3 mb-3">
                                         <img
-                                            src={fav.profileImage?.startsWith('/uploads') ? `http://localhost:5001${fav.profileImage}` : (fav.profileImage || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')}
+                                            src={fav.profileImage?.startsWith('/uploads') ? `${API_BASE_URL}${fav.profileImage}` : (fav.profileImage || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')}
                                             alt={fav.name}
                                             className="rounded-circle object-fit-cover shadow-sm border"
                                             style={{ width: '70px', height: '70px' }}

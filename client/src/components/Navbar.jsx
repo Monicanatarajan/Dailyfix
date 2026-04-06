@@ -58,7 +58,7 @@ const Navigation = () => {
                             </>
                         )}
                         {user?.role === 'admin' && (
-                            <Nav.Link as={Link} to="/admin/login">
+                            <Nav.Link as={Link} to="/admin/dashboard">
                                 <LayoutDashboard size={16} className="me-1" /> Admin Panel
                             </Nav.Link>
                         )}

@@ -9,13 +9,10 @@ import {
     Star, 
     Search, 
     ChevronRight,
-    Facebook,
-    Twitter,
-    Instagram,
-    Linkedin,
     Phone,
     Mail
 } from 'lucide-react';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 
 const Home = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -219,10 +216,10 @@ const Home = () => {
                                 We bring professional expertise right to your doorstep.
                             </p>
                             <div className="d-flex gap-3">
-                                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="bg-white bg-opacity-10 p-2 rounded-circle text-white"><Facebook size={20} /></a>
-                                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="bg-white bg-opacity-10 p-2 rounded-circle text-white"><Twitter size={20} /></a>
-                                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="bg-white bg-opacity-10 p-2 rounded-circle text-white"><Instagram size={20} /></a>
-                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="bg-white bg-opacity-10 p-2 rounded-circle text-white"><Linkedin size={20} /></a>
+                                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="bg-white bg-opacity-10 p-2 rounded-circle text-white"><FaFacebook size={20} /></a>
+                                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="bg-white bg-opacity-10 p-2 rounded-circle text-white"><FaTwitter size={20} /></a>
+                                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="bg-white bg-opacity-10 p-2 rounded-circle text-white"><FaInstagram size={20} /></a>
+                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="bg-white bg-opacity-10 p-2 rounded-circle text-white"><FaLinkedin size={20} /></a>
                             </div>
                         </Col>
                         <Col lg={2} md={6}>

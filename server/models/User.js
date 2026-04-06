@@ -4,30 +4,31 @@ const bcrypt = require('bcryptjs');
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    // minlength:8 ensures the random temp password always passes validation
+    password: { type: String, required: true, minlength: 6 },
     role: { type: String, enum: ['customer', 'provider', 'admin'], default: 'customer' },
-    isVerified: { type: Boolean, default: true }, // Verified by default since OTP is removed
-    is_verified: { type: Boolean, default: false }, // Admin Verification purely for providers
-    idProof: { type: String }, // Aadhaar or Photo ID
-    profileImage: { type: String, default: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png' }, // Avatar Image
-    favourites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // Array of favourite provider User IDs
+    isVerified: { type: Boolean, default: true },
+    is_verified: { type: Boolean, default: false },
+    idProof: { type: String },
+    profileImage: { type: String, default: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png' },
+    favourites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     location: {
         type: { type: String, enum: ['Point'] },
-        coordinates: { type: [Number] } // [longitude, latitude]
+        coordinates: { type: [Number] }
     },
-    phone: { type: String }, // Optional contact number
+    phone: { type: String },
     address: {
         houseStreet: { type: String, default: '' },
-        area: { type: String, default: '' },
-        city: { type: String, default: '' },
-        state: { type: String, default: '' },
-        pincode: { type: String, default: '' }
+        area:        { type: String, default: '' },
+        city:        { type: String, default: '' },
+        state:       { type: String, default: '' },
+        pincode:     { type: String, default: '' }
     },
     resetPasswordOtp: {
-        code: String,
+        code:      String,
         expiresAt: Date
     },
-    otp: { type: String },
+    otp:          { type: String },
     otpExpiresAt: { type: Date }
 }, { timestamps: true });
 

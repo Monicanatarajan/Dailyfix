@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Tabs, Tab, Form, Button, Row, Col, Table, Badge, Card, Offcanvas } from 'react-bootstrap';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { Check, X, Play, CheckCircle, Clock, MapPin, Star, MessageSquare } from 'lucide-react';
 import ChatModal from '../components/ChatModal';
 import ChatWindow from '../components/ChatWindow';
+import { API_BASE_URL } from '../utils/config';
 
 const STATUS_COLORS = {
     pending: 'warning', accepted: 'info', 'in-progress': 'primary', completed: 'success', declined: 'secondary', cancelled: 'danger'
@@ -14,6 +15,7 @@ const ProviderDashboard = () => {
     const { user } = useAuth();
     const [profile, setProfile] = useState({ category: 'Plumber', hourlyRate: 0, bio: '', location: { type: 'Point', coordinates: [0, 0] } });
     const [bookings, setBookings] = useState([]);
+    const bookingsRef = useRef([]);
     const [reviews, setReviews] = useState([]);
     const [conversations, setConversations] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
@@ -42,15 +44,12 @@ const ProviderDashboard = () => {
 
     const refreshData = async () => {
         try {
-            // Fetch bookings and check for new ones
             const res = await axios.get('/api/provider/bookings', { withCredentials: true });
-            
-            // If we have more bookings than before, show an alert
-            if (res.data.length > bookings.length && bookings.length > 0) {
-                // Play notification sound or show alert
-                alert("🔔 New booking arrived!");
+            if (res.data.length > bookingsRef.current.length && bookingsRef.current.length > 0) {
+                // Use a non-blocking notification instead of alert
+                console.log('🔔 New booking arrived!');
             }
-            
+            bookingsRef.current = res.data;
             setBookings(res.data);
             fetchConversations();
         } catch (err) {
@@ -75,6 +74,7 @@ const ProviderDashboard = () => {
     const fetchBookings = async () => {
         try {
             const res = await axios.get('/api/provider/bookings', { withCredentials: true });
+            bookingsRef.current = res.data;
             setBookings(res.data);
         } catch (err) { console.error(err); }
     };
@@ -247,7 +247,7 @@ const ProviderDashboard = () => {
                                                     >
                                                         <div className="d-flex align-items-center gap-2">
                                                             <img
-                                                                src={conv.profileImage?.startsWith('/uploads') ? `http://localhost:5001${conv.profileImage}` : (conv.profileImage || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')}
+                                                                src={conv.profileImage?.startsWith('/uploads') ? `${API_BASE_URL}${conv.profileImage}` : (conv.profileImage || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')}
                                                                 alt={conv.name}
                                                                 style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }}
                                                             />
@@ -284,7 +284,7 @@ const ProviderDashboard = () => {
                                                     >
                                                         <div className="d-flex align-items-center gap-2">
                                                             <img
-                                                                src={b.customer?.profileImage?.startsWith('/uploads') ? `http://localhost:5001${b.customer.profileImage}` : (b.customer?.profileImage || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')}
+                                                                src={b.customer?.profileImage?.startsWith('/uploads') ? `${API_BASE_URL}${b.customer.profileImage}` : (b.customer?.profileImage || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')}
                                                                 alt={b.customer?.name}
                                                                 style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: isActive ? '2px solid white' : '2px solid #dee2e6' }}
                                                             />
@@ -411,7 +411,7 @@ const ProviderDashboard = () => {
                                                 <div className="d-flex justify-content-between align-items-center mb-2">
                                                     <div className="d-flex align-items-center gap-2">
                                                         <img
-                                                            src={r.customer?.profileImage?.startsWith('/uploads') ? `http://localhost:5001${r.customer.profileImage}` : (r.customer?.profileImage || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')}
+                                                            src={r.customer?.profileImage?.startsWith('/uploads') ? `${API_BASE_URL}${r.customer.profileImage}` : (r.customer?.profileImage || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')}
                                                             alt={r.customer?.name}
                                                             className="rounded-circle object-fit-cover shadow-sm border"
                                                             style={{ width: '40px', height: '40px' }}

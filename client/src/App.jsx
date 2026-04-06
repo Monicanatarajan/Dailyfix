@@ -29,7 +29,7 @@ import Terms from './pages/Terms';
 function App() {
     return (
         <AuthProvider>
-            <Router>
+            <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
                 <Navigation />
                 <main className="py-4">
                     <Routes>
