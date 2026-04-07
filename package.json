@@ -4,8 +4,5 @@
   "scripts": {
     "build": "cd client && npm install && npm run build",
     "dev": "cd client && npm run dev"
-  },
-  "dependencies": {
-    "mongodb": "^7.1.1"
   }
 }
