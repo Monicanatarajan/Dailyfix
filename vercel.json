@@ -1,4 +1,6 @@
 {
+    "buildCommand": "npm install --prefix client && npx --prefix client vite build",
+    "outputDirectory": "client/dist",
     "rewrites": [
         { "source": "/(.*)", "destination": "/index.html" }
     ]
